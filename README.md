@@ -1,13 +1,16 @@
-# Sample Hardhat Project
-
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
+# Taipei-Weather-dNFT
 
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+// install dependencies
+pnpm install
+// compile contracts
+pnpm compile
+// run contract tests
+pnpm run test
+// spin up an instance of Hardhat Network
+pnpm run node
+// deploy contracts to local network
+pnpm run deploy
+// interacting programmatically
+npx hardhat run --network localhost scripts/index.ts
 ```
