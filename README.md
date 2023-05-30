@@ -5,7 +5,7 @@
 pnpm install
 
 # compile contracts
-pnpm compile
+pnpm run compile
 
 # run contract tests
 pnpm run test
