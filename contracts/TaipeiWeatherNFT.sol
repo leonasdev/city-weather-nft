@@ -70,7 +70,7 @@ contract TaipeiWeatherNFT is ERC721URIStorage, ChainlinkClient, ConfirmedOwner {
 
         request.add(
             "get",
-            "https://api.openweathermap.org/data/2.5/weather?q=Taipei&appid=0e73b0ab8384e5a6ac2ab93f8848853f"
+            "https://api.openweathermap.org/data/2.5/weather?q=Taipei&appid={API_TOKEN}"
         );
 
         // Set the path to find the desired data in the API response, where the response format is:
