@@ -32,11 +32,18 @@ contract TaipeiWeatherNFT is ERC721URIStorage, ChainlinkClient, ConfirmedOwner {
     //     "https://ipfs.io/ipfs/QmUaVVdfxe55zL5SJtrTnkrg4u58XTBnmuACtUiKRTiuSm?filename=rain.json",
     //     "https://ipfs.io/ipfs/QmTS9iPxiaY7YRE8A6rKf5ty5zHdZ2n6DMyCJTS8nTM6t2?filename=thunderstorm.json"
     // ];
-    string[] IpfsURI = [
-        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/clear.json",
-        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/drizzle.json",
-        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/rain.json",
-        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/thunderstorm.json"
+    string[] TaipeiURIs = [
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/taipei_clear.json",
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/taipei_drizzle.json",
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/taipei_rain.json",
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/taipei_thunderstorm.json"
+    ];
+
+    string[] TokyoURIs = [
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/tokyo_clear.json",
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/tokyo_drizzle.json",
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/tokyo_rain.json",
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/tokyo_thunderstorm.json"
     ];
 
     mapping(uint256 => EigenValue) public tokenIdToEigenValue;
