@@ -26,11 +26,17 @@ contract TaipeiWeatherNFT is ERC721URIStorage, ChainlinkClient, ConfirmedOwner {
         THUNDERSTORM
     }
 
+    // string[] IpfsURI = [
+    //     "https://ipfs.io/ipfs/QmYPmv89quwqfEHkdtcQUkYpzAe7HNufCGt19dhA8ijsVa?filename=clear.json",
+    //     "https://ipfs.io/ipfs/QmPamCAopJERLiDUFWWGi52KUNHigpBrYchbqet1YN9Fr9?filename=drizzle.json",
+    //     "https://ipfs.io/ipfs/QmUaVVdfxe55zL5SJtrTnkrg4u58XTBnmuACtUiKRTiuSm?filename=rain.json",
+    //     "https://ipfs.io/ipfs/QmTS9iPxiaY7YRE8A6rKf5ty5zHdZ2n6DMyCJTS8nTM6t2?filename=thunderstorm.json"
+    // ];
     string[] IpfsURI = [
-        "https://ipfs.io/ipfs/QmYPmv89quwqfEHkdtcQUkYpzAe7HNufCGt19dhA8ijsVa?filename=clear.json",
-        "https://ipfs.io/ipfs/QmPamCAopJERLiDUFWWGi52KUNHigpBrYchbqet1YN9Fr9?filename=drizzle.json",
-        "https://ipfs.io/ipfs/QmUaVVdfxe55zL5SJtrTnkrg4u58XTBnmuACtUiKRTiuSm?filename=rain.json",
-        "https://ipfs.io/ipfs/QmTS9iPxiaY7YRE8A6rKf5ty5zHdZ2n6DMyCJTS8nTM6t2?filename=thunderstorm.json"
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/clear.json",
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/drizzle.json",
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/rain.json",
+        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/thunderstorm.json"
     ];
 
     mapping(uint256 => EigenValue) public tokenIdToEigenValue;
@@ -52,8 +58,8 @@ contract TaipeiWeatherNFT is ERC721URIStorage, ChainlinkClient, ConfirmedOwner {
 
     function createCollectible() public {
         _tokenIds.increment();
-        string memory initURI = IpfsURI[0];
-        EigenValue initEigenValue = EigenValue(0);
+        string memory initURI = IpfsURI[1];
+        EigenValue initEigenValue = EigenValue(1);
 
         uint256 newItemId = _tokenIds.current();
         _safeMint(msg.sender, newItemId);
@@ -70,7 +76,7 @@ contract TaipeiWeatherNFT is ERC721URIStorage, ChainlinkClient, ConfirmedOwner {
 
         request.add(
             "get",
-            "https://api.openweathermap.org/data/2.5/weather?q=Taipei&appid={API_TOKEN}"
+            "https://api.openweathermap.org/data/2.5/weather?q=Taipei&appid=c83dc7bf353d67780d200a1902a2f587"
         );
 
         // Set the path to find the desired data in the API response, where the response format is:
@@ -121,6 +127,16 @@ contract TaipeiWeatherNFT is ERC721URIStorage, ChainlinkClient, ConfirmedOwner {
 
     function getLatestTokenId() public view returns (uint256) {
         return _tokenIds.current();
+    }
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) public override(ERC721) {
+        bytes32 requestId = requestVolumeDate();
+        requestIdToTokenId[requestId] = tokenId;
+        _transfer(from, to, tokenId);
     }
 
     function awardItem(

@@ -1,19 +1,19 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const contractAddress = "0x35ceF66f35e316130E437A51DDC43ef9d9d64B82";
+  const contractAddress = "0x1E7A8B89273bF76bf1F102aC668d1bd464d8c815";
   const DNFT = await ethers.getContractFactory("TaipeiWeatherNFT");
   const dnft = DNFT.attach(contractAddress);
   // await dnft.requestVolumeDate();
   // console.log("volume:", await dnft.volume());
-  // console.log("createCollectible...");
-  // console.log("token id:", await dnft.createCollectible());
-  // console.log("Done.");
+  console.log("createCollectible...");
+  console.log("token id:", await dnft.createCollectible());
+  console.log("Done.");
   // await function() {
   //   return new Promise(resolve => setTimeout(resolve, 10000));
   // }();
   // console.log("latest token id:", await dnft.getLatestTokenId());
-  console.log("token uri:", await dnft.tokenURI(1));
+  // console.log("token uri:", await dnft.tokenURI(1));
 
   // console.log(
   //   "dnft current balance: ",
