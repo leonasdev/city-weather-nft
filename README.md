@@ -10,10 +10,8 @@ This project is a smart contract for a dynamic NFT. The token starts as an Earth
     
 | Variants      | Clear         | Drizzle       | Rain | Thunderstorm |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Taipei  | <img src="/metadata/taipei-101_clear.gif" width="200" height="200"> | <img src="/metadata/taipei-101_drizzle.gif" width="200" height="200">  | <img src="/metadata/taipei-101_rain.gif" width="200" height="200">  | <img src="/metadata/taipei-101_thunderstorm.gif" width="200" height="200">  |
-| Tokyo  | <img src="/metadata/tokyo-skytree_clear_250.gif" width="200" height="200"> | <img src="/metadata/tokyo-skytree_drizzle_250.gif" width="200" height="200">  | <img src="/metadata/tokyo-skytree_rain_250.gif" width="200" height="200">  | <img src="/metadata/tokyo-skytree_thunderstorm_250.gif" width="200" height="200">  |
-
-
+| Taipei  | <img src="/metadata/taipei-101_clear.gif" width="100" height="100"> | <img src="/metadata/taipei-101_drizzle.gif" width="100" height="100">  | <img src="/metadata/taipei-101_rain.gif" width="100" height="100">  | <img src="/metadata/taipei-101_thunderstorm.gif" width="100" height="100">  |
+| Tokyo  | <img src="/metadata/tokyo-skytree_clear_250.gif" width="100" height="100"> | <img src="/metadata/tokyo-skytree_drizzle_250.gif" width="100" height="100">  | <img src="/metadata/tokyo-skytree_rain_250.gif" width="100" height="100">  | <img src="/metadata/tokyo-skytree_thunderstorm_250.gif" width="100" height="100">  |
 
 
 ## 🚀Getting Started
