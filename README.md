@@ -1,5 +1,18 @@
-# 🏞️City Weather NFT
+<h1 align="center">🏞️City Weather NFT</h1>
 This project is a smart contract for a dynamic NFT. The token starts as an Earth when initially minted. However, whenever the token is transferred to another address, it will randomly select a city and transform its appearance based on the weather conditions of that city.
+
+    
+## 💫Showcase
+<p align="center">
+    <img src="/metadata/earth_250.gif">
+    <div align="center">Earth (Initial Minted)</div>
+<p>
+    
+| Variants      | Clear         | Drizzle       | Rain | Thunderstorm |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| Taipei  | ![](/metadata/taipei-101_clear.gif) | ![](/metadata/taipei-101_drizzle.gif)  | ![](/metadata/taipei-101_rain.gif)  | ![](/metadata/taipei-101_thunderstorm.gif)  |
+| Tokyo  | ![](/metadata/tokyo-skytree_clear_250.gif) | ![](/metadata/tokyo-skytree_drizzle_250.gif)  | ![](/metadata/tokyo-skytree_rain_250.gif)  | ![](/metadata/tokyo-skytree_thunderstorm_250.gif)  |
+
 
 ## 🚀Getting Started
 1. Clone the project
@@ -29,9 +42,29 @@ This project is a smart contract for a dynamic NFT. The token starts as an Earth
     - See: https://docs.chain.link/resources/fund-your-contract#send-funds-to-your-contract
     - Funding `3` LINK should enough (can withdraw latter)
 9. Transfer your NFT token to another accoount
-10. Checking your NFT in another account
+10. Waitting for fulfillment
+    - You can check status of request by:
+      ```typescript
+      const contractAddress = "0xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // replace it with contract address
+      const DNFT = await ethers.getContractFactory("CityWeatherNFT");
+      const dnft = DNFT.attach(contractAddress);
+      console.log("Last request status:");
+      console.log(await dnft.s_requests(await dnft.requestIds(await dnft.lastRequestId())));
+      ```
+    - `npx hardhat run scripts/index.ts --network sepolia`
+    - Wait `fulfilled` to `true`
+
+11. Checking your NFT in another account
     - You need import NFT contract again in another account
-11. Observe that NFT transform its appearance!
+12. Observe that NFT transform its appearance!
+13. Withdraw your LINK token
+    - ```typescript
+      const contractAddress = "0xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // replace it with contract address
+      const DNFT = await ethers.getContractFactory("CityWeatherNFT");
+      const dnft = DNFT.attach(contractAddress);
+      await dnft.withdrawLink();
+      ```
+    - `npx hardhat run scripts/index.ts --network sepolia`
 
 ## 🛠️Tools used in this project
 - [Sodility](https://docs.soliditylang.org/en/v0.8.20/)
@@ -53,3 +86,6 @@ This project is a smart contract for a dynamic NFT. The token starts as an Earth
     A peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge by making the web upgradeable, resilient, and more open.
 - [Metamask](https://metamask.io/)
     Available as a browser extension and as a mobile app, MetaMask equips you with a key vault, secure login, token wallet, and token exchange—everything you need to manage your digital assets.
+    
+## ✅TODO
+- [ ] Auto fund LINK token when deployed
