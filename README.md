@@ -1,4 +1,4 @@
-# 🏙️City Weather NFT
+# 🏞️City Weather NFT
 This project is a smart contract for a dynamic NFT. The token starts as an Earth when initially minted. However, whenever the token is transferred to another address, it will randomly select a city and transform its appearance based on the weather conditions of that city.
 
 ## 🚀Getting Started
