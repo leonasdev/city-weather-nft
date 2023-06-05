@@ -1,4 +1,4 @@
-# City-Weather-dNFT
+# City-Weather-NFT
 
 ```
 # install dependencies
