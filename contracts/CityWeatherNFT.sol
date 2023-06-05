@@ -37,7 +37,7 @@ contract CityWeatherNFT is
     //     "https://ipfs.io/ipfs/QmTS9iPxiaY7YRE8A6rKf5ty5zHdZ2n6DMyCJTS8nTM6t2?filename=thunderstorm.json"
     // ];
     string EarthURI =
-        "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/earth.json";
+        "https://raw.githubusercontent.com/leonasdev/city-weather-nft/master/metadata/earth.json";
 
     string[] private cities = ["Taipei", "Tokyo"];
     string[] private weathers = ["Clear", "Drizzle", "Rain", "Thunderstorm"];
@@ -51,7 +51,7 @@ contract CityWeatherNFT is
 
     struct RequestStatus {
         uint256 paid;
-        bool fufilled;
+        bool fulfilled;
         uint256[] randomWords;
     }
 
@@ -61,9 +61,6 @@ contract CityWeatherNFT is
     // past requests Id.
     uint256[] public requestIds;
     uint256 public lastRequestId;
-
-    // for test
-    uint public counter = 0;
 
     // Depends on the number of requested values that you want sent to the
     // fulfillRandomWords() function. Test and adjust
@@ -107,31 +104,32 @@ contract CityWeatherNFT is
     //     "https://ipfs.io/ipfs/QmUaVVdfxe55zL5SJtrTnkrg4u58XTBnmuACtUiKRTiuSm?filename=rain.json",
     //     "https://ipfs.io/ipfs/QmTS9iPxiaY7YRE8A6rKf5ty5zHdZ2n6DMyCJTS8nTM6t2?filename=thunderstorm.json"
     function initMappings() private {
+        // using mock metadata, should using metadata which on ipfs
         _weatherToURI["Taipei"][
             "Clear"
-        ] = "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/taipei_clear.json";
+        ] = "https://raw.githubusercontent.com/leonasdev/city-weather-nft/master/metadata/taipei_clear.json";
         _weatherToURI["Taipei"][
             "Drizzle"
-        ] = "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/taipei_drizzle.json";
+        ] = "https://raw.githubusercontent.com/leonasdev/city-weather-nft/master/metadata/taipei_drizzle.json";
         _weatherToURI["Taipei"][
             "Rain"
-        ] = "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/taipei_rain.json";
+        ] = "https://raw.githubusercontent.com/leonasdev/city-weather-nft/master/metadata/taipei_rain.json";
         _weatherToURI["Taipei"][
             "Thunderstorm"
-        ] = "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/taipei_thunderstorm.json";
+        ] = "https://raw.githubusercontent.com/leonasdev/city-weather-nft/master/metadata/taipei_thunderstorm.json";
 
         _weatherToURI["Tokyo"][
             "Clear"
-        ] = "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/tokyo_clear.json";
+        ] = "https://raw.githubusercontent.com/leonasdev/city-weather-nft/master/metadata/tokyo_clear.json";
         _weatherToURI["Tokyo"][
             "Drizzle"
-        ] = "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/tokyo_drizzle.json";
+        ] = "https://raw.githubusercontent.com/leonasdev/city-weather-nft/master/metadata/tokyo_drizzle.json";
         _weatherToURI["Tokyo"][
             "Rain"
-        ] = "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/tokyo_rain.json";
+        ] = "https://raw.githubusercontent.com/leonasdev/city-weather-nft/master/metadata/tokyo_rain.json";
         _weatherToURI["Tokyo"][
             "Thunderstorm"
-        ] = "https://raw.githubusercontent.com/leonasdev/taipei-weather-dnft/master/metadata/tokyo_thunderstorm.json";
+        ] = "https://raw.githubusercontent.com/leonasdev/city-weather-nft/master/metadata/tokyo_thunderstorm.json";
 
         _weatherToWeather["Clear"] = "Clear";
         _weatherToWeather["Clouds"] = "Clear";
@@ -150,13 +148,15 @@ contract CityWeatherNFT is
         tokenIdToCity[newItemId] = "Earth";
     }
 
-    function requestVolumeData(string memory city) public returns (bytes32) {
+    function requestWeatherAPI(string memory city) public returns (bytes32) {
         Chainlink.Request memory request = buildChainlinkRequest(
             jobId,
             address(this),
             this.fulfill.selector
         );
 
+        // using mock api
+        // should change to realworld api (e.g. openweather api)
         string memory api = string.concat(
             "https://647d73dbaf9847108549b49c.mockapi.io/api/",
             city,
@@ -178,7 +178,7 @@ contract CityWeatherNFT is
         return requestId;
     }
 
-    function requestRandomWords() public returns (uint256) {
+    function requestCityAndWeather() public returns (uint256) {
         uint256 requestId = requestRandomness(
             callbackGasLimit,
             requestConfirmations,
@@ -187,7 +187,7 @@ contract CityWeatherNFT is
         s_requests[requestId] = RequestStatus({
             paid: VRF_V2_WRAPPER.calculateRequestPrice(callbackGasLimit),
             randomWords: new uint256[](0),
-            fufilled: false
+            fulfilled: false
         });
         requestIds.push(requestId);
         lastRequestId = requestId;
@@ -218,7 +218,7 @@ contract CityWeatherNFT is
         uint256[] memory _randomWords
     ) internal override {
         require(s_requests[_requestId].paid > 0, "request not found");
-        s_requests[_requestId].fufilled = true;
+        s_requests[_requestId].fulfilled = true;
         s_requests[_requestId].randomWords = _randomWords;
         emit RequestRandomnessFulfilled(
             _requestId,
@@ -226,13 +226,11 @@ contract CityWeatherNFT is
             s_requests[_requestId].paid
         );
 
-        // string memory city = cities[_randomWords[0] % 2];
-        string memory city = cities[counter];
-        counter = counter + 1;
+        string memory city = cities[_randomWords[0] % cities.length];
         uint256 tokenId = requestIdToTokenId[_requestId];
         tokenIdToCity[tokenId] = city;
 
-        bytes32 requestAPIId = requestVolumeData(city);
+        bytes32 requestAPIId = requestWeatherAPI(city);
         requestAPIIdToRequestRandomId[requestAPIId] = _requestId;
     }
 
@@ -256,22 +254,8 @@ contract CityWeatherNFT is
         address to,
         uint256 tokenId
     ) public override(ERC721) {
-        uint256 requestId = requestRandomWords();
-        // bytes32 requestId = requestVolumeData();
+        uint256 requestId = requestCityAndWeather();
         requestIdToTokenId[requestId] = tokenId;
         _transfer(from, to, tokenId);
-    }
-
-    function equals(
-        string memory a,
-        string memory b
-    ) private pure returns (bool) {
-        if (bytes(a).length != bytes(b).length) {
-            return false;
-        } else {
-            return
-                keccak256(abi.encodePacked(a)) ==
-                keccak256(abi.encodePacked(b));
-        }
     }
 }
