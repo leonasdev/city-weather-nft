@@ -1,4 +1,4 @@
-# Taipei-Weather-dNFT
+# City-Weather-dNFT
 
 ```
 # install dependencies
