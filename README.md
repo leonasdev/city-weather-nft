@@ -1,28 +1,39 @@
-# City-Weather-NFT
+# 🏙️City Weather NFT
+This project is a smart contract for a dynamic NFT. The token starts as an Earth when initially minted. However, whenever the token is transferred to another address, it will randomly select a city and transform its appearance based on the weather conditions of that city.
 
-```
-# install dependencies
-pnpm install
+## 🚀Getting Started
+1. Clone the project
+    - `git clone https://github.com/leonasdev/city-weather-nft`
+2. Install dependencies
+    - `pnpm install`
+3. Compile contracts
+    - `pnpm compile`
+4. Setting the `.env` file
+    - Adjust values in `.env.example` and rename it to `.env`
+5. Deploy contract to sepolia test network
+    - `npx hardhat run scripts/deploy.ts --network sepolia`
+6. Minting token
+    - ```typescript
+      const contractAddress = "0xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // replace it with contract address
+      const DNFT = await ethers.getContractFactory("CityWeatherNFT");
+      const dnft = DNFT.attach(contractAddress);
+      console.log("Minting...");
+      await dnft.mint();
+      console.log("Done.");
+      ```
+    - `npx hardhat run scripts/index.ts --network sepolia`
+7. Checking your NFT
+    - Import nft contract in Matamask to observe your NFT token
+    - **Token ID must start with** `1`
+8. Fund contract LINK token
+    - See: https://docs.chain.link/resources/fund-your-contract#send-funds-to-your-contract
+    - Funding `3` LINK should enough (can withdraw latter)
+9. Transfer your NFT token to another accoount
+10. Checking your NFT in another account
+    - You need import NFT contract again in another account
+11. Observe that NFT transform its appearance!
 
-# compile contracts
-pnpm run compile
-
-# run contract tests
-pnpm run test
-
-# spin up an instance of Hardhat Network
-pnpm run node
-
-# deploy contracts to local network
-pnpm run deploy
-
-# interacting programmatically
-npx hardhat run --network localhost scripts/index.ts
-
-# deploy contracts to sepolia test network
-npx hardhat run scripts/deploy.ts --network sepolia
-```
-## Tools
+## 🛠️Tools used in this project
 - [Sodility](https://docs.soliditylang.org/en/v0.8.20/)
     Solidity is an object-oriented, high-level language for implementing smart contracts. Smart contracts are programs that govern the behavior of accounts within the Ethereum state.
 - [Sepolia Testnet](https://sepoliafaucet.com/)
