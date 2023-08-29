@@ -89,3 +89,4 @@ This project is a smart contract for a dynamic NFT. The token starts as an Earth
     
 ## ✅TODO
 - [ ] Auto fund LINK token when deployed
+- [ ] Handle secret key on chain (openweather api key)
